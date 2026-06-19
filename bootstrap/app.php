@@ -13,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->validateCsrfTokens(except: [
-            'users/*'
+            'users/*','/books','jobs','/books/*'
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -21,3 +21,5 @@ return Application::configure(basePath: dirname(__DIR__))
             fn (Request $request) => $request->is('api/*'),
         );
     })->create();
+
+
