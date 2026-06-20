@@ -11,9 +11,13 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->alias([
+            'loggedin' => \App\Http\Middleware\CheckLoggedIn::class,
+        ]);
         $middleware->validateCsrfTokens(except: [
-            'users/*','/books','jobs','/books/*'
+            'users/*','/books','/books/*'
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
