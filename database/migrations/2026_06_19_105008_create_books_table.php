@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
 {
-    Schema::create('books', function (Blueprint $table) {
+    Schema::connection('mysql')->create('books', function (Blueprint $table) {
         $table->id();
         $table->string('title');
         $table->string('author');
+        $table->string('category');
+        $table->string('edition')->nullable();
         $table->text('description')->nullable();
         $table->decimal('price', 8, 2);
         $table->integer('stock')->default(0);
