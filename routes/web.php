@@ -3,13 +3,15 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NextUserController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [UserController::class, 'register'])->name('user.register');
 
 Route::get('/', function () {
-    return view('home');
+    return view('home');    
 });
 
 Route::prefix('/users')
@@ -39,3 +41,7 @@ Route::resource('job', JobController::class);
 // performing CRUD operation using resource controller for books  apiResource will insert /api in the route and we must create it in api.php file while resource won't.
 
 Route::resource('books', BookController::class);
+
+Route::resource('admin', AdminController::class);
+
+Route::resource('nextUser',NextUserController::class);

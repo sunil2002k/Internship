@@ -10,20 +10,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
+
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+   use HasFactory, Notifiable;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+    // Add referrer_id and age to fillable fields
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'age',
+        'referrer_id', 
     ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    // Relationship: Get the user who referred this user
+    public function referrer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'referrer_id');
+    }
 }

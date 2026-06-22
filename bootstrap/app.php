@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'loggedin' => \App\Http\Middleware\CheckLoggedIn::class,
         ]);
         $middleware->validateCsrfTokens(except: [
-            'users/*','/books','/books/*'
+            'users/*','/books','/books/*','/nextUser','nextUser/*'
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
