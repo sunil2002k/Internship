@@ -20,8 +20,11 @@ class DatabaseSeeder extends Seeder
         // 1. Create a pool of 10 generic student/borrower users
         $users = User::factory(10)->create();
 
-        // 2. Create a pool of 20 books
-        $books = Book::factory(20)->create();
+        // 2. Create a pool of 20 books and assign them to the created users
+        Book::factory(20)->make()->each(function (Book $book) use ($users) {
+            $book->user_id = $users->random()->id;
+            $book->save();
+        });
 
         // 3. Create 2 admin users
         $admins = Admin::factory(2)->create();

@@ -26,13 +26,13 @@ class UserController extends Controller
 
     public function users()
     {
-        $users = User::all();
+        $users = User::withTrashed()->get();
         return view('users', compact('users'));
     }
     
     public function usersById($id)
     {
-        $user = User::find($id);
+        $user = User::withTrashed()->find($id);
         if (! $user) {
             return redirect('/users')->with('error', 'User not found.');
         }
@@ -41,7 +41,7 @@ class UserController extends Controller
     }
     public function edit($id)
 {
-    $user = User::find($id);
+    $user = User::withTrashed()->find($id);
 
     if (!$user) {
         return redirect('/users')
@@ -53,7 +53,7 @@ class UserController extends Controller
 
     public function updateById(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = User::withTrashed()->find($id);
         if (!$user) {
             return redirect('/users')->with('error', 'User not found.');
         }
@@ -69,7 +69,7 @@ class UserController extends Controller
 
     public function deleteById($id)
     {
-        $user = User::find($id);
+        $user = User::withTrashed()->find($id);
         if (! $user) {
             return redirect('/users')->with('error', 'User not found.');
         }

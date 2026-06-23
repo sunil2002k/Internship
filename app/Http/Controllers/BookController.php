@@ -28,22 +28,23 @@ class BookController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $data = $request->validate([
-        'title' => 'required|min:3',
-        'author' => 'required|min:3',
-        'description' => 'nullable',
-        'price' => 'required|numeric',
-        'stock' => 'required|integer',
-    ]);
+    {
+        $data = $request->validate([
+            'title' => 'required|min:3',
+            'author' => 'required|min:3',
+            'description' => 'nullable',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'user_id' => 'required|exists:users,id',
+        ]);
 
-    $book = Book::create($data);
+        $book = Book::create($data);
 
-    return response()->json([
-        'message' => 'Book created successfully',
-        'book' => $book
-    ], 201);
-}
+        return response()->json([
+            'message' => 'Book created successfully',
+            'book' => $book
+        ], 201);
+    }
 
     /**
      * Display the specified resource.
@@ -66,22 +67,23 @@ class BookController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Book $book)
-{
-    $data = $request->validate([
-        'title' => 'sometimes|min:3',
-        'author' => 'sometimes|min:3',
-        'description' => 'nullable',
-        'price' => 'sometimes|numeric',
-        'stock' => 'sometimes|integer',
-    ]);
+    {
+        $data = $request->validate([
+            'title' => 'sometimes|min:3',
+            'author' => 'sometimes|min:3',
+            'description' => 'nullable',
+            'price' => 'sometimes|numeric',
+            'stock' => 'sometimes|integer',
+            'user_id' => 'sometimes|exists:users,id',
+        ]);
 
-    $book->update($data);
+        $book->update($data);
 
-    return response()->json([
-        'message' => 'Book updated successfully',
-        'book' => $book
-    ]);
-}
+        return response()->json([
+            'message' => 'Book updated successfully',
+            'book' => $book
+        ]);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -89,9 +91,8 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
-    return response()->json([
-        'message' => 'Book updated successfully'
-    ]);
+        return response()->json([
+            'message' => 'Book updated successfully'
+        ]);
     }
-    
 }

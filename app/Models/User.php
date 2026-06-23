@@ -3,17 +3,16 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 
-class User extends Authenticatable
+class User extends Model
 {
-   use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     // Add referrer_id and age to fillable fields
     protected $fillable = [
@@ -21,7 +20,7 @@ class User extends Authenticatable
         'email',
         'password',
         'age',
-        'referrer_id', 
+        'referrer_id',
     ];
 
     protected $hidden = [
@@ -29,9 +28,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Relationship: Get the user who referred this user
-    public function referrer(): BelongsTo
+    public function books(): HasMany
     {
-        return $this->belongsTo(User::class, 'referrer_id');
+        return $this->hasMany(Book::class);
     }
 }

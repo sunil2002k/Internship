@@ -22,7 +22,7 @@ class BookFactory extends Factory
             'author' => $this->faker->name(),
             'category' => $this->faker->word(),
             'description' => $this->faker->sentence(),
-            'price'=> $this->faker->randomFloat(2, 1, 100),
+            'price' => $this->faker->randomFloat(2, 1, 100),
             'stock' => $this->faker->numberBetween(1, 5),
         ];
     }

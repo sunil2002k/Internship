@@ -12,8 +12,9 @@ class Admin extends Model
 
     protected $connection = "mysql_second";
 
-    protected $guarded = [
-
+    protected $fillable = [
+        'name','email','password'
     ];
 
 }
+    
