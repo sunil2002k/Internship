@@ -4,12 +4,16 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NextUserController;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
+
+
 
 Route::post('/register', [UserController::class, 'register'])->name('user.register');
 
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 Route::get('/', function () {
     return view('home');    
 });
@@ -18,6 +22,8 @@ Route::prefix('/users')
         ->name('user.')
         ->group(function(){
     Route::get('/', [UserController::class, 'users']);
+
+    Route::get('/deletedOne', [UserController::class, 'getOnlyDeletedOne'])->name('getDeletedOne');
 
     Route::get('/{id}', [UserController::class, 'usersById'])->name('show');
 
@@ -44,4 +50,6 @@ Route::resource('books', BookController::class);
 
 Route::resource('admin', AdminController::class);
 
-Route::resource('nextUser',NextUserController::class);
+Route::resource('nextUser', NextUserController::class);
+
+route::get('/template',[TemplateController::class, 'index']);

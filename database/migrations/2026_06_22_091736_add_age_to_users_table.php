@@ -13,7 +13,7 @@ return new class extends Migration
     {
         // age is added to the user table using another migration file
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('age');
+            $table->integer('age')->nullable();
         });
     }
 

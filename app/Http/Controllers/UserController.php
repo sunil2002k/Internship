@@ -12,7 +12,8 @@ class UserController extends Controller
         $incomingFields = $request->validate([
             'name' => ['required', 'min:3', 'max:10'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'min:3', 'max:10']
+            'password' => ['required', 'min:3', 'max:10'],
+            'age'=>['required']
         ]);
 
         $incomingFields['password'] = bcrypt($incomingFields['password']);
@@ -77,6 +78,18 @@ class UserController extends Controller
         $user->delete();
         return 'User deleted successfully.';
     }
+    public function getOnlyDeletedOne(){
+        $user = User::onlyTrashed()->get();
+        if (! $user) {
+            return redirect('/users')->with('error', 'User not found.');
+        }
+        return response()->json([
+            'message' => 'Deleted User fetched successfully.',
+            'data' => $user
+        ], 200);
+    }
+
+    
     public function optionalParam($name='Guest'){
         return 'Hello,'.$name;
     }
